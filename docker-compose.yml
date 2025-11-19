@@ -26,5 +26,12 @@ services:
       SPRING_DATASOURCE_PASSWORD: postgres
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
 
+  frontend:
+    build: ./frontend/announcements-view-app
+    ports:
+     - "5173:5173"
+    depends_on:
+      - auth-app
+
 volumes:
   pgdata:
