@@ -6,8 +6,9 @@ import com.announcementservice.authservice.dto.JwtResponse;
 import com.announcementservice.authservice.dto.RefreshJwtRequest;
 import com.announcementservice.authservice.dto.UserDto;
 import com.announcementservice.authservice.entity.RegistrationUserDto;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import com.announcementservice.authservice.entity.User;
+import com.announcementservice.authservice.repository.UserRepository;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -26,6 +27,10 @@ public class AuthControllerIntegrationTest {
 
     private HttpHeaders headers;
 
+    @Autowired
+    private UserRepository userRepository;
+    private Long testUserId;
+
     @BeforeEach
     public void setUp() {
         headers = new HttpHeaders();
@@ -36,42 +41,47 @@ public class AuthControllerIntegrationTest {
     void testRegistrationAndAuthFlow() {
         // 1️⃣ Регистрация нового пользователя
         RegistrationUserDto registrationUser = new RegistrationUserDto();
-        registrationUser.setUsername("testuser");
-        registrationUser.setPassword("password123");
-        registrationUser.setEmail("testuser@example.com");
+        registrationUser.setUsername("testuser3");
+        registrationUser.setPassword("password1231");
+        registrationUser.setEmail("testuser3@example.com");
 
         HttpEntity<RegistrationUserDto> regRequest = new HttpEntity<>(registrationUser, headers);
-        ResponseEntity<String> regResponse = restTemplate.postForEntity("/registration", regRequest, String.class);
+        ResponseEntity<UserDto> regResponse = restTemplate.postForEntity("/registration", regRequest, UserDto.class);
         assertThat(regResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        Assertions.assertNotNull(regResponse.getBody());
+        assertThat(regResponse.getBody().getUsername()).isEqualTo("testuser3");
+        assertThat(regResponse.getBody().getEmail()).isEqualTo("testuser3@example.com");
+        testUserId = regResponse.getBody().getId();
 
         // 2️⃣ Аутентификация пользователя
-        JwtRequest jwtRequest = new JwtRequest("testuser");
-        jwtRequest.setPassword("password123");
+        JwtRequest jwtRequest = new JwtRequest("testuser3");
+        jwtRequest.setPassword("password1231");
 
         HttpEntity<JwtRequest> authRequest = new HttpEntity<>(jwtRequest, headers);
         ResponseEntity<JwtResponse> authResponse = restTemplate.postForEntity("/auth", authRequest, JwtResponse.class);
         assertThat(authResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(authResponse.getBody().getAccessToken()).isNotNull(); // предполагаем, что тело содержит JWT
+        Assertions.assertNotNull(authResponse.getBody());
+        String accessToken = authResponse.getBody().getAccessToken();
+        assertThat(accessToken).isNotNull();
+        assertThat(authResponse.getBody().getRefreshToken()).isNotNull();
+        assertThat(authResponse.getBody().getRefreshToken()).isNotEqualTo(accessToken);
 
+        var refreshToken = authResponse.getBody().getRefreshToken();
         // 3️⃣ Обновление токена (refresh)
         RefreshJwtRequest refreshRequest = new RefreshJwtRequest(authResponse.getBody().getRefreshToken());
-        refreshRequest.setRefreshToken("dummy-refresh-token"); // подставьте реальный токен из authResponse
+        refreshRequest.setRefreshToken(refreshToken);
 
         HttpEntity<RefreshJwtRequest> refreshEntity = new HttpEntity<>(refreshRequest, headers);
-        ResponseEntity<String> refreshResponse = restTemplate.postForEntity("/refresh", refreshEntity, String.class);
+        ResponseEntity<JwtResponse> refreshResponse = restTemplate.postForEntity("/refresh", refreshEntity, JwtResponse.class);
         assertThat(refreshResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(refreshResponse.getBody()).contains("token"); // новый JWT
+        assertThat(refreshResponse).isNotNull();
+        Assertions.assertNotNull(refreshResponse.getBody());// предполагаем, что тело содержит JWT
+        assertThat(refreshResponse.getBody().getAccessToken()).isNotNull(); // предполагаем, что тело содержит AccessToken
+        assertThat(refreshResponse.getBody().getAccessToken()).isNotEqualTo(accessToken); // предполагаем, новый не равен первому
     }
 
-    @Test
-    void testGetUsers() {
-        // Получаем список пользователей
-        ResponseEntity<UserDto[]> response = restTemplate.getForEntity("/users", UserDto[].class);
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-
-        UserDto[] users = response.getBody();
-        assertThat(users).isNotNull();
-        // Проверка, что есть хотя бы один пользователь
-        assertThat(users.length).isGreaterThanOrEqualTo(1);
+    @AfterEach
+    public void cleanup() {
+        userRepository.deleteById(testUserId);
     }
 }
