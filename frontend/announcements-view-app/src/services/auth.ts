@@ -1,15 +1,27 @@
-export async function registerUser(data: { name: string; email: string; password: string }) {
-  const response = await fetch("/api/register", {
+import type { RegistrationFormData } from "@/types/RegistrationFormData";
+
+export async function registerUser(data: RegistrationFormData) {
+    try {
+  const response = await fetch("http://localhost:8080/register", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
 
-  const result = await response.json();
+    // читаем ответ текстом (чтобы не ломаться на пустом/не JSON)
+    const text = await response.text();
+    const json = text ? JSON.parse(text) : null;
 
-  if (!response.ok) {
-    throw new Error(result.message || "Произошла ошибка на сервере");
+    // Если сервер вернул ошибку (400–500)
+    if (!response.ok) {
+      throw new Error(json?.message || `Ошибка ${response.status}`);
+    }
+
+    // Успех
+    return json;
+  } catch (err) {
+    // Ошибки сети / парсинга / другие
+    console.error("Ошибка запроса:", err);
+    throw new Error(err instanceof Error ? err.message : "Неизвестная ошибка");
   }
-
-  return result;
 }
