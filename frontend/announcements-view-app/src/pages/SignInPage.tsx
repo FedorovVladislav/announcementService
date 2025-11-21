@@ -32,10 +32,10 @@ const SignIn = () => {
     });
 
     const onSubmit = (
-      //  values
+       values
     ) => {
-        //dispatch(loginUser(values, navigate));
-        //console.log(values);
+        dispatch(loginUser(values, navigate));
+        console.log(values);
     };
 
     return (
@@ -67,7 +67,7 @@ const SignIn = () => {
 
 
                     </div>
-                    <Button className="w-full" type="submit">Вход</Button>
+                    <Button className="w-full text-gray-500" type="submit">Вход</Button>
                 </form>
 
                 <div className="text-sm text-center">

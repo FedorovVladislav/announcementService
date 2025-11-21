@@ -6,8 +6,8 @@ export function getUrl() {
         currentUrl = currentUrl.split('#')[0];
     }
     console.log("baseUrl: " + currentUrl);
-     return currentUrl;
-    //return "http://192.168.1.81/"
+     //return currentUrl;
+    return "http://localhost:8080/"
 }
 
 export let AxiosSingleton = axios.create({

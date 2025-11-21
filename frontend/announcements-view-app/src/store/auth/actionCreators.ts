@@ -2,11 +2,14 @@ import {Dispatch} from "@reduxjs/toolkit"
 import api from "@/api/"
 import {ILoginRequest} from "@/types/auth/ILoginRequest.ts"
 import {loginStart, loginSuccess, logoutSuccess,} from "./authReducer"
-import {NavigateFunction} from "react-router/dist/lib/hooks";
+import {NavigateFunction} from "react-router";
 import {IRegistrationRequest} from "@/types/auth/IRegistrationRequest.ts";
+import type {AppDispatch} from "@/store";
 
-const isCheckAuth = false
-const loginUser = (data: ILoginRequest, navigate: NavigateFunction) => (async (dispatch: Dispatch<any>): Promise<void> => {
+const isCheckAuth = true
+const loginUser = (data: ILoginRequest, navigate: NavigateFunction) => (async (dispatch: AppDispatch): Promise<void> => {
+        console.log("loginUser")
+        console.log(data)
         try {
 
             if (isCheckAuth) {
@@ -16,18 +19,18 @@ const loginUser = (data: ILoginRequest, navigate: NavigateFunction) => (async (d
                 console.log(res.status + " status")
                 console.log(res.headers + " header")
                 console.log(res.data.accessToken + " token")
-                dispatch(loginSuccess(data))
+                dispatch(loginSuccess(res))
             } else {
                 dispatch(loginSuccess(data))
             }
-            navigate("/status")
-        } catch (e: any) {
+            navigate("/testPage")
+        } catch (e: unknown) {
             console.error(e)
         }
     }
 )
 
-export const logoutUser = (navigate: NavigateFunction) => async (dispatch: Dispatch<any>): Promise<void> => {
+export const logoutUser = (navigate: NavigateFunction) => async (dispatch: AppDispatch): Promise<void> => {
     try {
         console.log("logoutUser")
         //await api.auth.logout()
@@ -48,7 +51,7 @@ export const registrationUser = (data: IRegistrationRequest, navigate: NavigateF
         } else {
             navigate("/signIn")
         }
-    } catch (e: any) {
+    } catch (e: unknown) {
         console.error(e)
     }
 }
