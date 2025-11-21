@@ -19,7 +19,7 @@ import { registerUser } from "./services/auth";
 import type { RegistrationFormData } from "./types/RegistrationFormData";
 
 export const registrationSchema = z.object({
-  name: z.string().min(2, "Имя должно быть минимум 2 символа"),
+  username: z.string().min(2, "Имя должно быть минимум 2 символа"),
   email: z.string(),
   password: z.string().min(6, "Пароль должен быть минимум 6 символов"),
 });
@@ -39,10 +39,10 @@ export function RegistrationForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
-          name="name"
+          name="username"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>username</FormLabel>
               <FormControl>
                 <Input placeholder="shadcn" {...field} />
               </FormControl>

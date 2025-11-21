@@ -2,7 +2,7 @@ import type { RegistrationFormData } from "@/types/RegistrationFormData";
 
 export async function registerUser(data: RegistrationFormData) {
     try {
-  const response = await fetch("http://localhost:8080/register", {
+  const response = await fetch("http://localhost:8080/registration", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),

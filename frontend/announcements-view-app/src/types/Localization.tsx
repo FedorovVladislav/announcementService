@@ -1,0 +1,9 @@
+export const requiredError : string = "Необходимо заполнить поле";
+export const roamingDescription: string = "Использование роуминга может повысить стоимость услуг связи";
+export const ipValidationMessage = "При вводе IP-адреса произошла ошибка. Пожалуйста, проверьте правильность введённого IP-адреса и повторите попытку. Правильный формат ввода IP-адреса выглядит так: ХХХ.ХХХ.ХХХ.ХХХ, где Х число от 0 до 255.";
+export const minimalLength = "Минимальная длина - %s"
+export const pinLength = "Длина пароля должна быть - 4"
+export const passwordLength8 = "Минимальная длина пароля должна быть 8 знаков"
+export const passwordLength32 = "Максимальная длина пароля должна быть 32 знаков"
+export const phoneValidation = "Неверно введен номер телефона. Требуется следующий формат: +79XXYYYXXYY"
+export const smsCardDescription = "Когда на дискретном входе появляется сигнал, что на указанный номер отправляется смс сообщение"

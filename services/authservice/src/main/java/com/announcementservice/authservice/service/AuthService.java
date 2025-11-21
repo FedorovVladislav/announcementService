@@ -9,6 +9,8 @@ import com.announcementservice.authservice.entity.User;
 import com.announcementservice.authservice.exception.ApiError;
 import com.announcementservice.authservice.utils.JwtTokenUtils;
 import io.jsonwebtoken.Claims;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 public class AuthService {
+    private static final Logger log = LoggerFactory.getLogger(AuthService.class);
     @Autowired
     private UserService userService;
     @Autowired
@@ -64,6 +67,7 @@ public class AuthService {
             return new ResponseEntity<>(new ApiError(HttpStatus.BAD_REQUEST.toString(), "Пользователь с указанным email уже существует"), HttpStatus.BAD_REQUEST);
         }
         User user = userService.createNewUser(registrationUserDto);
+        log.debug("User with name {} successful registered", user.getName());
         return ResponseEntity.ok(new UserDto(user.getId(), user.getName(), user.getEmail()));
     }
 
