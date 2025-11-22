@@ -2,6 +2,8 @@ databaseChangeLog:
   - changeSet:
       id: 1
       author: you
+      runAlways: true
+      runOnChange: true
       sqlFile:
         path: changes/001-insert-initial-data.sql
         relativeToChangelogFile: true

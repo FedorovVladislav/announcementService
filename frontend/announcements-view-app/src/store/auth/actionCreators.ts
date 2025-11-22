@@ -11,18 +11,13 @@ const loginUser = (data: ILoginRequest, navigate: NavigateFunction) => (async (d
         console.log("loginUser")
         console.log(data)
         try {
-
-            if (isCheckAuth) {
-                console.log("start action crators")
-                dispatch(loginStart())
-                const res = await api.auth.login(data)
-                console.log(res.status + " status")
-                console.log(res.headers + " header")
-                console.log(res.data.accessToken + " token")
-                dispatch(loginSuccess(res))
-            } else {
-                dispatch(loginSuccess(data))
-            }
+            console.log("start action crators")
+            dispatch(loginStart())
+            const res = await api.auth.login(data)
+            console.log(res.status + " status")
+            console.log(res.headers + " header")
+            console.log(res.data.accessToken + " token")
+            dispatch(loginSuccess(res.data))
             navigate("/testPage")
         } catch (e: unknown) {
             console.error(e)
@@ -42,15 +37,17 @@ export const logoutUser = (navigate: NavigateFunction) => async (dispatch: AppDi
 }
 
 export const registrationUser = (data: IRegistrationRequest, navigate: NavigateFunction) => async (dispatch: Dispatch): Promise<void> => {
+    console.log("registrationUser")
+    console.log(data)
     try {
-        if (isCheckAuth) {
-            console.log("start registration")
-            dispatch(loginStart())
-            await api.auth.registration(data)
-            navigate("/signIn")
-        } else {
-            navigate("/signIn")
-        }
+
+        console.log("start action crators")
+        const res = await api.auth.registration(data)
+        console.log(res.status + " status")
+        console.log(res.headers + " header")
+        console.log(res.data.accessToken + " token")
+
+        navigate("/testPage")
     } catch (e: unknown) {
         console.error(e)
     }

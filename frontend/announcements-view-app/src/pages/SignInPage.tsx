@@ -27,7 +27,7 @@ const SignIn = () => {
         resolver: zodResolver(formSchema),
         defaultValues: {
             username: "",
-            password: "",
+            password: ""
         },
     });
 
@@ -36,6 +36,10 @@ const SignIn = () => {
     ) => {
         dispatch(loginUser(values, navigate));
         console.log(values);
+    };
+
+    const goToRegistration = () => {
+        navigate("/registration");
     };
 
     return (
@@ -64,24 +68,10 @@ const SignIn = () => {
                                {...register("password")}
                         />
                         {errors.password && <FormMessage>{errors.password.message}</FormMessage>}
-
-
                     </div>
                     <Button className="w-full text-gray-500" type="submit">Вход</Button>
+                    <Button className="w-full text-gray-500" onClick={goToRegistration}>Регистрация</Button>
                 </form>
-
-                <div className="text-sm text-center">
-                    <p className="mt-10 text-center text-sm text-gray-500">
-                        Забыли пароль?{' '}
-                        <a href="#" onClick={(e) => {
-                            e.preventDefault();
-                            navigate('/firstPage');
-                        }}
-                           className="font-medium text-indigo-600 hover:text-indigo-500 text-current no-underline bg-transparent p-0">
-                            Сброс
-                        </a>
-                    </p>
-                </div>
             </div>
         </div>
     );

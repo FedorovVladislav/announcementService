@@ -5,6 +5,7 @@ import PrivateRoutes from "@/components/PrivateRoutes.tsx";
 import SignIn from './pages/SignInPage'
 import {TestPage} from './pages/TestPage';
 import FirstPage from './pages/FirstPage';
+import {Registration} from "@/pages/RegistrationPage.tsx";
 
 function App() {
     return (
@@ -17,6 +18,7 @@ function App() {
                 </Route>
                 <Route path="/firstPage" element={<FirstPage/>}/>
                 <Route path="/signIn" element={<SignIn/>}/>
+                <Route path="/registration" element={<Registration/>}/>
                 <Route path="*" element={<Navigate to="/signIn"/>}/>
             </Routes>
         </HashRouter>
