@@ -1,12 +1,13 @@
-import {LucideIcon} from 'lucide-react';
-import {Button, ButtonProps} from './ui/button';
+import type {LucideIcon} from 'lucide-react';
+import {Button} from './ui/button';
 import {SheetClose} from "@/components/ui/sheet.tsx";
 import {Link} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "@/hook/AppDispatch.ts";
-import {RootState} from "@/store";
+import type {RootState} from "@/store";
 import {setActiveLink} from "@/store/variables/variablesReducer.ts";
+import * as React from "react";
 
-interface SidebarButtonProps extends ButtonProps {
+interface SidebarButtonProps extends React.ComponentProps<"button"> {
     icon?: LucideIcon,
     to: string,
 }

@@ -51,7 +51,7 @@ const SignIn = () => {
                         <div>
                             <Input
                                 id="username"
-                                name="Username"
+                                name="username"
                                 type="text"
                                 autoComplete="username"
                                 required

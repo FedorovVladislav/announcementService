@@ -3,10 +3,12 @@ package com.announcementservice.authservice.dto;
 public class JwtResponse {
     private String accessToken;
     private String refreshToken;
+    private String username;;
 
-    public JwtResponse(String accessToken, String refreshToken) {
+    public JwtResponse(String accessToken, String refreshToken, String username) {
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
+        this.username = username;
     }
 
     public String getAccessToken() {
@@ -23,5 +25,13 @@ public class JwtResponse {
 
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
+    }
+
+    public String getUserName() {
+        return username;
+    }
+
+    public void setUserName(String username) {
+        this.username = username;
     }
 }

@@ -1,4 +1,4 @@
-import {ReactNode} from "react";
+import type {ReactNode} from "react";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card.tsx";
 import {cn} from "@/lib/utils.ts";
 

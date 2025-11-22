@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 const LoginForm = () => {
   // состояния для email и пароля
@@ -6,7 +6,7 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
 
   // обработчик отправки формы
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // предотвращаем перезагрузку страницы
     console.log("Email:", email);
     console.log("Password:", password);

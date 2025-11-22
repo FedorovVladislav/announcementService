@@ -1,11 +1,9 @@
 import {
     BarChart,
-    CableIcon,
     Captions,
     GlobeLock,
     HardDriveDownload,
     LogOutIcon,
-    LucideChevronsLeftRight,
     Phone,
     Settings,
     Unplug
@@ -27,9 +25,8 @@ import {Link, useNavigate} from "react-router-dom";
 import {Button} from "@/components/ui/button.tsx";
 import {setActiveLink} from "@/store/variables/variablesReducer.ts";
 import {useAppDispatch, useAppSelector} from "@/hook/AppDispatch.ts";
-import {RootState} from "@/store";
+import type {RootState} from "@/store";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar.tsx";
-import {ThemeModeToggle} from "@/components/customelements/ThemeModeToggle.tsx";
 import {logoutUser} from "@/store/auth/actionCreators.ts";
 import {Separator} from "@/components/ui/separator.tsx";
 
@@ -77,9 +74,7 @@ export function AppSidebar() {
     const activeLink = useAppSelector((state: RootState) => state.variables.activeLink);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const userName = useAppSelector((state: RootState) => state.auth.userName)
-    const isConnected = useAppSelector((state: RootState) => state.setting.isConnect);
-    const isRequest = useAppSelector((state: RootState) => state.setting.isRequest);
+    const userName = useAppSelector((state: RootState) => state.auth.username)
     const handleLogoutClick = () => {
         dispatch(logoutUser(navigate));
     };
@@ -125,9 +120,6 @@ export function AppSidebar() {
                             </Avatar>
                             <span>{userName}</span>
                         </div>
-                        <ThemeModeToggle/>
-                        <CableIcon color={isConnected ? "green" : "red"}/>
-                        <LucideChevronsLeftRight color={isRequest ? "yellow" : "red"}/>
                         <Button onClick={handleLogoutClick} size="sm" variant="outline">
                             <LogOutIcon size="16"/>
                         </Button>

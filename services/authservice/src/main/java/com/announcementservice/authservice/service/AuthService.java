@@ -41,7 +41,7 @@ public class AuthService {
         UserDetails userDetails = userService.loadUserByUsername(authRequest.getUsername());
         String token = jwtTokenUtils.generateToken(userDetails);
         String refreshToken = jwtTokenUtils.generateRefreshToken(userDetails);
-        return ResponseEntity.ok(new JwtResponse(token, refreshToken));
+        return ResponseEntity.ok(new JwtResponse(token, refreshToken, authRequest.getUsername()));
     }
 
     //TODO: -Not Check
@@ -53,7 +53,7 @@ public class AuthService {
             UserDetails user = userService.loadUserByUsername(login);
             final String accessToken = jwtTokenUtils.generateToken(user);
             final String newRefreshToken = jwtTokenUtils.generateRefreshToken(user);
-            return ResponseEntity.ok(new JwtResponse(accessToken, newRefreshToken));
+            return ResponseEntity.ok(new JwtResponse(accessToken, newRefreshToken, login));
         }
         return new ResponseEntity<>(new ApiError(HttpStatus.UNAUTHORIZED.toString(), "Невалидный JWT токен"), HttpStatus.UNAUTHORIZED);
     }

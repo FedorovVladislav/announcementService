@@ -1,14 +1,17 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit'
+import { createSlice} from '@reduxjs/toolkit'
+import type { PayloadAction} from '@reduxjs/toolkit'
 import type {ILoginResponce} from "@/types/auth/ILoginResponce.ts";
 
 export interface AuthState {
     isLogIn: boolean
-    accessToken: string | null
+    accessToken: string | null,
+    username: string | null,
 }
 
 const initialState: AuthState = {
     isLogIn: false,
     accessToken: null,
+    username: null,
 }
 
 export const authReducer = createSlice({
@@ -19,6 +22,7 @@ export const authReducer = createSlice({
         loginSuccess: (state, action: PayloadAction<ILoginResponce>): AuthState => ({
             isLogIn: true,
             accessToken: action.payload.accessToken,
+            username: action.payload.userName
         }),
         logoutSuccess: (): AuthState => initialState,
     },

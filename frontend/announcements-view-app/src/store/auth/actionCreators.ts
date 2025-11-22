@@ -1,12 +1,11 @@
-import {Dispatch} from "@reduxjs/toolkit"
+import type {Dispatch} from "@reduxjs/toolkit"
 import api from "@/api/"
-import {ILoginRequest} from "@/types/auth/ILoginRequest.ts"
+import type {ILoginRequest} from "@/types/auth/ILoginRequest.ts"
 import {loginStart, loginSuccess, logoutSuccess,} from "./authReducer"
-import {NavigateFunction} from "react-router";
-import {IRegistrationRequest} from "@/types/auth/IRegistrationRequest.ts";
+import type {NavigateFunction} from "react-router";
+import type {IRegistrationRequest} from "@/types/auth/IRegistrationRequest.ts";
 import type {AppDispatch} from "@/store";
 
-const isCheckAuth = true
 const loginUser = (data: ILoginRequest, navigate: NavigateFunction) => (async (dispatch: AppDispatch): Promise<void> => {
         console.log("loginUser")
         console.log(data)

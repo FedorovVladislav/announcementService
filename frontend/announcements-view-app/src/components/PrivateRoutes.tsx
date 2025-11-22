@@ -1,5 +1,5 @@
 import {Navigate, Outlet} from "react-router-dom"
-import {RootState} from "@/store";
+import type {RootState} from "@/store";
 import {useAppSelector} from "@/hook/AppDispatch.ts";
 
 export default function PrivateRoutes() {
