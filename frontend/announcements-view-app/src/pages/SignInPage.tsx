@@ -4,7 +4,7 @@ import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {z} from "zod";
 import {useAppDispatch} from "@/hook/AppDispatch.ts";
-import loginUser from "@/store/auth/actionCreators";
+import {loginUser} from "@/store/auth/actionCreators";
 import {FormMessage} from "@/components/ui/form.tsx";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";

@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1
+      id: 001-insert-initial-data
       author: you
       runAlways: true
       runOnChange: true

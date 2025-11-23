@@ -1,27 +1,7 @@
-import {AxiosSingleton} from "@/api/AxiosSingleton";
-import Endpoints from "./EndPoints";
-import {startReload} from "@/store/data/settingsReducer.ts";
-import type {Dispatch} from "@reduxjs/toolkit";
-import type {ILoginRequest} from "@/types/auth/ILoginRequest.ts";
+// Этот файл больше не используется
+// Функции аутентификации находятся в @/api/auth/index.ts
+// Action creators находятся в @/store/auth/actionCreators.ts
 
-export const login = (data: ILoginRequest, dispatch: Dispatch): void => {
-
-    console.log("Send Settings: " + JSON.stringify(data, null, 2));
-    dispatch(startReload())
-    console.log("start save settings");
-    AxiosSingleton.put(Endpoints.AUTH.LOGIN, data)
-        .then(function () {
-                console.log("success send settings: ")
-            }
-        ).catch(function (error) {
-        console.log(error)
-        console.log(error.response.status)
-        if (error.response.status == 404) {
-            console.log("Сервер не найдено!");
-        }
-    })
-
-}
-export const searchWifi = (dispatch: Dispatch): void => {
-
+export const searchWifi = (dispatch: any): void => {
+    // TODO: реализовать поиск WiFi
 }

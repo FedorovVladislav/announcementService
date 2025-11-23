@@ -6,7 +6,7 @@ import type {IRegistrationRequest} from "@/types/auth/IRegistrationRequest.ts";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useForm} from "react-hook-form";
 import {Button} from "@/components/ui/button.tsx";
-import {Form, FormControl, FormField, FormItem, FormLabel} from "@/components/ui/form.tsx";
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form.tsx";
 import { Input } from "@/components/ui/input"
 import {registrationUser} from "@/store/auth/actionCreators.ts";
 import {useAppDispatch} from "@/hook/AppDispatch.ts";
@@ -40,10 +40,11 @@ export function Registration() {
                     name="username"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Username</FormLabel>
+                            <FormLabel>Имя пользователя</FormLabel>
                             <FormControl>
                                 <Input placeholder="name" {...field} />
                             </FormControl>
+                            <FormMessage />
                         </FormItem>
                     )}
                 />
@@ -52,10 +53,11 @@ export function Registration() {
                     name="email"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Username</FormLabel>
+                            <FormLabel>Email</FormLabel>
                             <FormControl>
-                                <Input placeholder="email" {...field} />
+                                <Input type="string" placeholder="email@example.com" {...field} />
                             </FormControl>
+                            <FormMessage />
                         </FormItem>
                     )}
                 />
@@ -64,10 +66,11 @@ export function Registration() {
                     name="password"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Username</FormLabel>
+                            <FormLabel>Пароль</FormLabel>
                             <FormControl>
-                                <Input  placeholder="password" {...field} />
+                                <Input type="password" placeholder="password" {...field} />
                             </FormControl>
+                            <FormMessage />
                         </FormItem>
                     )}
                 />
