@@ -5,12 +5,16 @@ import type {NavigateFunction} from "react-router";
 import type {IRegistrationRequest} from "@/types/auth/IRegistrationRequest.ts";
 import type {AppDispatch} from "@/store";
 import type {AxiosError} from "axios";
+import {toast} from "sonner";
 
 export const loginUser = (data: ILoginRequest, navigate: NavigateFunction) => (async (dispatch: AppDispatch): Promise<void> => {
         try {
             dispatch(loginStart())
             const res = await api.auth.login(data)
             dispatch(loginSuccess(res.data))
+            toast.success("Успешный вход", {
+                description: "Добро пожаловать!",
+            });
             navigate("/testPage")
         } catch (error: unknown) {
             if (error instanceof Error) {
@@ -29,17 +33,23 @@ export const loginUser = (data: ILoginRequest, navigate: NavigateFunction) => (a
                     });
                     
                     const errorMessage = errorData?.description || errorData?.message || `Ошибка входа: ${status}`;
-                    alert(errorMessage);
+                    toast.error("Ошибка входа", {
+                        description: errorMessage,
+                    });
                 } else if (axiosError.request) {
                     console.error("Network error:", axiosError.message);
-                    alert("Ошибка сети. Проверьте подключение к серверу.");
+                    toast.error("Ошибка сети", {
+                        description: "Проверьте подключение к серверу.",
+                    });
                 } else {
                     console.error("Request setup error:", axiosError.message);
-                    alert(`Ошибка запроса: ${axiosError.message}`);
+                    toast.error("Ошибка запроса", {
+                        description: axiosError.message,
+                    });
                 }
             } else {
                 console.error("Unknown error:", error);
-                alert("Произошла неизвестная ошибка");
+                toast.error("Произошла неизвестная ошибка");
             }
         }
     }
@@ -58,6 +68,9 @@ export const logoutUser = (navigate: NavigateFunction) => async (dispatch: AppDi
 export const registrationUser = (data: IRegistrationRequest, navigate: NavigateFunction) => async (): Promise<void> => {
     try {
         await api.auth.registration(data)
+        toast.success("Регистрация успешна", {
+            description: "Вы успешно зарегистрированы!",
+        });
         navigate("/testPage")
     } catch (error: unknown) {
         if (error instanceof Error) {
@@ -76,21 +89,27 @@ export const registrationUser = (data: IRegistrationRequest, navigate: NavigateF
                     fullError: errorData
                 });
                 
-                // Можно показать пользователю через alert или toast
+                // Показываем пользователю через toast
                 const errorMessage = errorData?.description || errorData?.message || `Ошибка регистрации: ${status}`;
-                alert(errorMessage);
+                toast.error("Ошибка регистрации", {
+                    description: errorMessage,
+                });
             } else if (axiosError.request) {
                 // Запрос был отправлен, но ответа не получено
                 console.error("Network error:", axiosError.message);
-                alert("Ошибка сети. Проверьте подключение к серверу.");
+                toast.error("Ошибка сети", {
+                    description: "Проверьте подключение к серверу.",
+                });
             } else {
                 // Что-то пошло не так при настройке запроса
                 console.error("Request setup error:", axiosError.message);
-                alert(`Ошибка запроса: ${axiosError.message}`);
+                toast.error("Ошибка запроса", {
+                    description: axiosError.message,
+                });
             }
         } else {
             console.error("Unknown error:", error);
-            alert("Произошла неизвестная ошибка");
+            toast.error("Произошла неизвестная ошибка");
         }
     }
 }

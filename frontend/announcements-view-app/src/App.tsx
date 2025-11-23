@@ -4,8 +4,8 @@ import LayOut from "@/components/LayOut.tsx";
 import PrivateRoutes from "@/components/PrivateRoutes.tsx";
 import SignIn from './pages/SignInPage'
 import {TestPage} from './pages/TestPage';
-
 import {Registration} from "@/pages/RegistrationPage.tsx";
+import {Toaster} from "@/components/ui/sonner.tsx";
 
 function App() {
     return (
@@ -20,6 +20,7 @@ function App() {
                 <Route path="/registration" element={<Registration/>}/>
                 <Route path="*" element={<Navigate to="/signIn"/>}/>
             </Routes>
+            <Toaster />
         </HashRouter>
     )
 }

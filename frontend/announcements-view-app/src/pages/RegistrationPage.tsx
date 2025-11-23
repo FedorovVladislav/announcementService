@@ -2,7 +2,6 @@
 
 
 import {z} from "zod";
-import type {IRegistrationRequest} from "@/types/auth/IRegistrationRequest.ts";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useForm} from "react-hook-form";
 import {Button} from "@/components/ui/button.tsx";
@@ -11,13 +10,14 @@ import { Input } from "@/components/ui/input"
 import {registrationUser} from "@/store/auth/actionCreators.ts";
 import {useAppDispatch} from "@/hook/AppDispatch.ts";
 import {useNavigate} from "react-router-dom";
+import {ArrowLeft} from "lucide-react";
 
-const formSchema = z.object<IRegistrationRequest>({
-    username: z.string().min(4, {
-        message: "Username must be at least 2 characters.",
+const formSchema = z.object({
+    username: z.string().min(2, {
+        message: "Имя пользователя должно содержать минимум 2 символа.",
     }),
     password: z.string().min(4, {
-        message: "Password must be at least 2 characters.",
+        message: "Пароль должен содержать минимум 4 символа.",
     }),
     email : z.string()
 });
@@ -32,9 +32,15 @@ export function Registration() {
         dispatch(registrationUser(values, navigate));
     }
 
+    const goBack = () => {
+        navigate("/signIn");
+    };
+
     return (
-        <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <div className="flex justify-center h-screen flex-col items-center space-y-6">
+            <div className="flex flex-col h-full justify-center items-center space-y-6 min-w-96">
+                <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                 <FormField
                     control={form.control}
                     name="username"
@@ -55,7 +61,7 @@ export function Registration() {
                         <FormItem>
                             <FormLabel>Email</FormLabel>
                             <FormControl>
-                                <Input type="string" placeholder="email@example.com" {...field} />
+                                <Input type="email" placeholder="email@example.com" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -74,10 +80,21 @@ export function Registration() {
                         </FormItem>
                     )}
                 />
-                <Button type="submit">Submit</Button>
-            </form>
-        </Form>
-
+                        <div className="flex gap-2">
+                            <Button
+                                type="button"
+                                onClick={goBack}
+                                className="flex items-center gap-2 flex-1 text-gray-500"
+                            >
+                                <ArrowLeft className="h-4 w-4" />
+                                Назад
+                            </Button>
+                            <Button className="flex-1 text-gray-500" type="submit">Регистрация</Button>
+                        </div>
+                    </form>
+                </Form>
+            </div>
+        </div>
     )
 }
 
