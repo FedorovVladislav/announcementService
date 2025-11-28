@@ -1,4 +1,3 @@
-
 import {useNavigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -9,6 +8,7 @@ import {FormMessage} from "@/components/ui/form.tsx";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {Label} from "@/components/ui/label.tsx";
+import type {ILoginRequest} from "@/types/auth/ILoginRequest.ts";
 
 const formSchema = z.object({
     username: z.string().min(2, {
@@ -31,14 +31,12 @@ const SignIn = () => {
         },
     });
 
-    const onSubmit = (
-       values
-    ) => {
+    const onSubmit = (values: ILoginRequest): void => {
         dispatch(loginUser(values, navigate));
         console.log(values);
     };
 
-    const goToRegistration = () => {
+    const goToRegistration = (): void => {
         navigate("/registration");
     };
 
@@ -51,7 +49,6 @@ const SignIn = () => {
                         <div>
                             <Input
                                 id="username"
-                                name="username"
                                 type="text"
                                 autoComplete="username"
                                 required

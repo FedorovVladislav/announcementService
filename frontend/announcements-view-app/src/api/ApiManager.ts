@@ -2,6 +2,6 @@
 // Функции аутентификации находятся в @/api/auth/index.ts
 // Action creators находятся в @/store/auth/actionCreators.ts
 
-export const searchWifi = (dispatch: any): void => {
+export const searchWifi = (_dispatch: any): void => {
     // TODO: реализовать поиск WiFi
 }

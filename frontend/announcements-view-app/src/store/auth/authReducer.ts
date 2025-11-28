@@ -19,7 +19,7 @@ export const authReducer = createSlice({
     initialState,
     reducers: {
         loginStart: (): AuthState => (initialState),
-        loginSuccess: (state, action: PayloadAction<ILoginResponce>): AuthState => ({
+        loginSuccess: (_state, action: PayloadAction<ILoginResponce>): AuthState => ({
             isLogIn: true,
             accessToken: action.payload.accessToken,
             username: action.payload.userName

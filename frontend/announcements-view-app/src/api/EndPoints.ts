@@ -3,9 +3,9 @@ const Endpoints = {
     SETTINGS: `/config`,
     PINS: `/config/pins`,
     AUTH: {
-        LOGIN: `/auth`,
-        LOGOUT: '/logout',
-        REGISTRATION: `/registration`
+        LOGIN: `/auth/auth`,
+        LOGOUT: '/auth/logout',
+        REGISTRATION: `/auth/registration`
     },
     WIFI: "/status/wifi"
 };
