@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-insert-initial-data
+      author: you
+      runAlways: true
+      runOnChange: true
+      sqlFile:
+        path: changes/001-insert-initial-data.sql
+        relativeToChangelogFile: true
+        splitStatements: true
+        endDelimiter: ";"
