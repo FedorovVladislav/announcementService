@@ -6,6 +6,7 @@ import SignIn from './pages/SignInPage'
 import {TestPage} from './pages/TestPage';
 import {Registration} from "@/pages/RegistrationPage.tsx";
 import {Toaster} from "@/components/ui/sonner.tsx";
+import {AnnouncementPage} from "@/pages/AnnouncementPage.tsx";
 
 function App() {
     return (
@@ -14,6 +15,7 @@ function App() {
                 <Route element={<PrivateRoutes/>}>
                     <Route element={<LayOut/>}>
                         <Route path="/testPage" element={<TestPage/>}/>
+                        <Route path="/announcement" element={<AnnouncementPage/>}/>
                     </Route>
                 </Route>
                 <Route path="/signIn" element={<SignIn/>}/>
