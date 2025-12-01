@@ -7,6 +7,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,10 +20,12 @@ import java.util.stream.Collectors;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
+    private static final Logger log = LoggerFactory.getLogger(JwtRequestFilter.class);
     private JwtTokenUtils jwtTokenUtils;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        log.debug("Start method JwtRequestFilter.doFilterInternal");
         String authHeader = request.getHeader("Authorization");
         String username = null;
         String jwt = null;
@@ -30,9 +34,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             try {
                 username = jwtTokenUtils.getUsername(jwt);
             } catch (ExpiredJwtException e) {
-                System.out.println("Время жизни токена вышло");
+                log.debug("Время жизни токена вышло");
             } catch (SignatureException e) {
-                System.out.println("Подпись неправильная");
+                log.debug("Подпись неправильная");
             }
         }
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {

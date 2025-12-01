@@ -39,4 +39,13 @@ public class AnnouncementRequest {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "AnnouncementRequest{" +
+                "userId=" + userId +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }
