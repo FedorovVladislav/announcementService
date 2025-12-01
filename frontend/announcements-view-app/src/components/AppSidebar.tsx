@@ -38,8 +38,8 @@ const items = [
         icon: BarChart,
     },
     {
-        title: "Системные настройки",
-        url: "/settings",
+        title: "Объявления",
+        url: "/announcement",
         icon: Settings,
     },
     {
